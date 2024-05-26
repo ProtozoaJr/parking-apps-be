@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../node_modules/@prisma/solecode"
+}
+
+model vehicle {
+  id                  String   @id @default(uuid())
+  vehicleNumber       String   @unique
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  parks               park[]
+}
+
+model park {
+  id                  String   @id @default(uuid())
+  vehicle             vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId           String
+  arrivalTime         DateTime @default(now())
+  departureTime       DateTime?
+  status              String
+  bill                Float @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model config {
+  id                  String @id @default(uuid())
+  name                String @unique
+  valueInt            Int @default(0)
+  valueString         String  @default("")       
+  status              Boolean @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}

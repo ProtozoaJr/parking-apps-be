@@ -1,0 +1,13 @@
+stages:
+  - build
+
+build on dev:
+  stage: build
+  environment: dev
+  only:
+    - dev
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY/protozoajr/solecode-be:latest .
+    - docker push $CI_REGISTRY/protozoajr/solecode-be:latest

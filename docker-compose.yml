@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:16-alpine
+    env_file:
+      - .env.db
+    ports:
+      - 5432:5432
+    volumes: 
+      - db:/var/lib/postgresql/data
+    networks:
+      - solecode-be-network
+  backend:
+    image: protozoajr/solecode-be:latest
+    ports:
+      - '3001:3001'
+    env_file:
+      - .env
+    command: sh -c "npm run dev"
+    networks:
+      - solecode-be-network
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  solecode-be-network:
+    driver: bridge
+  
+
