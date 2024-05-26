@@ -10,16 +10,16 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
     networks:
-      - solecode-be-network
+      - parking-apps-network
   backend:
-    image: ghcr.io/protozoajr/solecode-be:main
+    image: ghcr.io/protozoajr/parking-apps-be:main
     ports:
       - '3001:3001'
     env_file:
       - .env
     command: sh -c "npm run dev"
     networks:
-      - solecode-be-network
+      - parking-apps-network
     depends_on:
       - db
     restart: unless-stopped
@@ -29,7 +29,7 @@ volumes:
     driver: local
 
 networks:
-  solecode-be-network:
+  parking-apps-network:
     driver: bridge
   
 
