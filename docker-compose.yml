@@ -12,7 +12,7 @@ services:
     networks:
       - solecode-be-network
   backend:
-    image: protozoajr/solecode-be:latest
+    image: ghcr.io/protozoajr/solecode-be:main
     ports:
       - '3001:3001'
     env_file:
